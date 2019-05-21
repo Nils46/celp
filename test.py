@@ -28,7 +28,7 @@ print(mse_content)
 
 
 # ITEM BASED FILTERING MSE
-sim_ratings = create_similarity_matrix_cosine(df_utility_stars)
+sim_ratings = create_similarity_matrix_cosine(utility)
 
 # predict ratings and calculate mse
 predicted_ratings_items = predict_ratings(sim_ratings, utility, test)
