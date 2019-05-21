@@ -18,3 +18,9 @@ The static and templates directory contain all html/css/js files.
 `data.py` is responsible for loading and handling the data.
 
 `recommender.py` is the recommendation engine.
+
+## Test
+Test.py bevat code om de MSE voor item-based en content-based filtering te berekenen.
+
+## Helpers
+Helpers.py bevat functies om item-based en content-based filtering te ondersteunen.
