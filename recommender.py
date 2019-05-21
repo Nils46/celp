@@ -1,20 +1,57 @@
 from data import CITIES, BUSINESSES, USERS, REVIEWS, TIPS, CHECKINS
-
+from helpers import *
 import random
-
+    
 def recommend(user_id=None, business_id=None, city=None, n=10):
-    """
-    Returns n recommendations as a list of dicts.
-    Optionally takes in a user_id, business_id and/or city.
-    A recommendation is a dictionary in the form of:
-        {
-            business_id:str
-            stars:str
-            name:str
-            city:str
-            adress:str
-        }
-    """
-    if not city:
+
+    # business pagina
+    if business_id and user_id:
+
+        item_based = cf_item_login(user_id, n, business_id)
+        
+        if len(item_based) < n:
+            missing_amount = n - len(item_based)
+            content_based = content_based_filtering_login(user_id, missing_amount)
+        
+            return item_based + content_based[:missing_amount]
+       
+        else:
+            return item_based
+    
+    
+    #als een bedrijf wordt aangeklikt zonder in te loggen
+    if business_id and not user_id:
+
+        item_based = cf_item_logout(business_id, n)
+        
+        if len(item_based) < n:
+            missing_amount = n - len(item_based)
+            content_based = content_based_filtering_logout(business_id, missing_amount)
+        
+            return item_based + content_based[:missing_amount]
+       
+        else:
+            return item_based
+    
+    
+    # homepagina als een gebruiker heeft ingelogt
+    if user_id:
+
+        item_based = cf_item_login(user_id, n, business_id)
+
+        if len(item_based) < n:
+            missing_amount = n - len(item_based)
+            content_based = content_based_filtering_login(user_id, n)
+        
+            return item_based + content_based[:missing_amount]
+       
+        else:
+            return item_based
+        
+    
+    # geen user ingelogt
+    else:
+   
         city = random.choice(CITIES)
-    return random.sample(BUSINESSES[city], n)
+        random_sample = random.sample(BUSINESSES[city], n)
+        return random_sample
