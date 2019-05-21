@@ -10,6 +10,7 @@ Do ensure these functions remain functional:
 import os
 import json
 import random
+import pandas as pd
 
 DATA_DIR = "data"
 
@@ -21,6 +22,22 @@ def load_cities():
     """
     return os.listdir(DATA_DIR)
 
+
+def get_business1(city, business_id):
+    """
+    Given a city name and a business id, return that business's data.
+    Returns a dictionary of the form:
+        {
+            name:str,
+            business_id:str,
+            stars:str,
+            ...
+        }
+    """
+    for business in BUSINESSES[city]:
+        if business["business_id"] == business_id:
+            return business
+    raise IndexError(f"invalid business_id {business_id}")
 
 def load(cities, data_filename):
     """
@@ -41,24 +58,6 @@ def load(cities, data_filename):
                 city_data.append(json.loads(line))
         data[city] = city_data
     return data
-
-
-def get_business(city, business_id):
-    """
-    Given a city name and a business id, return that business's data.
-    Returns a dictionary of the form:
-        {
-            name:str,
-            business_id:str,
-            stars:str,
-            ...
-        }
-    """
-    for business in BUSINESSES[city]:
-        if business["business_id"] == business_id:
-            return business
-    raise IndexError(f"invalid business_id {business_id}")
-
 
 def get_reviews(city, business_id=None, user_id=None, n=10):
     """
