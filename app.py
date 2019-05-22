@@ -61,7 +61,7 @@ def business(city, id):
     user_id = user["user_id"] if user else None
 
     # Get business by city and business_id
-    business = data.get_business(city.lower(), id)
+    business = data.get_business1(city.lower(), id)
 
     # Grab reviews
     reviews = data.get_reviews(city=business["city"].lower(), business_id=business["business_id"])
