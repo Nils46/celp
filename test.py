@@ -35,3 +35,23 @@ predicted_ratings_items = predict_ratings(sim_ratings, utility, test)
 mse_item_based = mse(predicted_ratings_items)
 
 print(mse_item_based)
+
+# DATA DENSITY
+
+def number_of_movies(ratings):
+ 
+    return len(ratings['business_id'].unique())
+
+def number_of_users(ratings):
+
+    return len(ratings['user_id'].unique())
+
+def number_of_ratings(ratings):
+
+    return ratings.shape[0]
+
+def rating_density(ratings):
+
+    return number_of_ratings(ratings) / (number_of_movies(ratings) * number_of_users(ratings))
+
+print(rating_density(df))
